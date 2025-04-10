@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 
@@ -22,15 +23,32 @@ public class MainController {
     @GetMapping
     public String index(Model model) {
         model.addAttribute("memoList", memoService.findAll());
-        model.addAttribute("memoForm", new MemoForm());
+//        model.addAttribute("memoForm", new MemoForm());
         return "index";
     }
 
-    @PostMapping
+
+    @GetMapping("/add")
+    public String add(Model model) {
+        model.addAttribute("memoForm", new MemoForm());
+        return "add";
+    }
+
+    @PostMapping("/add")
     public String save(MemoForm form) throws Exception {
 //        Memo memo = new Memo(0L, form.getText(), "");
         Memo memo = Memo.fromText(form.getText());
         memoService.create(memo);
         return "redirect:/";
     }
+
+
+    @PostMapping("/delete-all")
+    public String deleteAll(RedirectAttributes redirectAttributes) throws Exception {
+        memoService.deleteAll();
+        // addAttribute -> 주소창으로 전달해서 controller가 한 번 더 받아줘야함
+        redirectAttributes.addFlashAttribute("msg", "전체 삭제");
+        return "redirect:/";
+    }
+
 }
