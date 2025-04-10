@@ -13,7 +13,7 @@
   </nav>
   <p th:text="${msg}"></p>
   <section>
-    <form th:action="@{/update}" th:method="post">
+    <form th:action="@{/update/{id}(id=${memo.id()})}" th:method="post">
       <input hidden name="id" th:value="${memo.id}" >
       <label>내용 :
         <input th:name="text" th:value="${memo.text}">
