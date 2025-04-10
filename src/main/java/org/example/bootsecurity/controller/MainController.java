@@ -59,4 +59,9 @@ public class MainController {
         return "redirect:/";
     }
 
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable("id") Long id, Model model) {
+        return "update";
+    }
+
 }
