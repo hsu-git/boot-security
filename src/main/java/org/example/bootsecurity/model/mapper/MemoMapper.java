@@ -23,4 +23,7 @@ public interface MemoMapper {
     // 이건 하드 딜리트
     @Delete("DELETE FROM memo")
     void deleteAll();
+
+    @Delete("DELETE FROM memo WHERE id= #{id}")
+    void deleteById(Long id);
 }
